@@ -107,7 +107,7 @@ final class CategUi(helpers: Helpers, bits: ForumBits):
             tbody(cls := "infinite-scroll")(
               stickyPosts.map(showTopic(sticky = true)),
               topics.currentPageResults.map(showTopic(sticky = false)),
-              pagerNextTable(topics, n => routes.ForumCateg.show(categ.id, n).url)
+              pagerNextTable(topics, n => routes.ForumCateg.show(categ.id, n).url, colSpan = 3)
             )
           )
         )
@@ -185,7 +185,7 @@ final class CategUi(helpers: Helpers, bits: ForumBits):
                   td(shorten(Markdown(p.post.text).unlink, 400)),
                   td(a(href := routes.ForumPost.redirect(p.post.id))(momentFromNow(p.post.createdAt)))
                 ),
-              pagerNextTable(posts, np => routes.ForumCateg.modFeed(categ.id, np).url)
+              pagerNextTable(posts, np => routes.ForumCateg.modFeed(categ.id, np).url, colSpan = 4)
             )
           )
         )

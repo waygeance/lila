@@ -29,7 +29,7 @@ function register(el: HTMLElement, selector: string, backoff = 500) {
         );
     })
       .then(() => {
-        nav.innerHTML = spinnerHtml;
+        nav.innerHTML = `<div style='text-align: center; padding: 20px;'>${spinnerHtml}</div>`;
         return xhr.text(nextUrl);
       })
       .then(

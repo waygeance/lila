@@ -31,9 +31,10 @@ trait PaginatorHelper:
     pager.nextPage.map: np =>
       div(cls := "pager")(pagerA(url(np)))
 
-  def pagerNextTable(pager: Paginator[?], url: Int => String): Option[Tag] =
+  // Added colSpan parameter with a default of 1
+  def pagerNextTable(pager: Paginator[?], url: Int => String, colSpan: Int = 1): Option[Tag] =
     pager.nextPage.map: np =>
-      tr(cls := "pager")(th(pagerA(url(np))))
+      tr(cls := "pager")(th(colspan := colSpan)(pagerA(url(np))))
 
   private def pagerA(url: String) = a(rel := "next", href := url)("Next")
 

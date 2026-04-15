@@ -223,7 +223,7 @@ final class PostUi(helpers: Helpers, bits: ForumBits):
                     else td(colspan := "2")("[You can't access this team forum post]")
                   )
                 ,
-                pagerNextTable(pager, n => routes.ForumPost.search(text, n).url)
+                pagerNextTable(pager, n => routes.ForumPost.search(text, n).url, colSpan = 2)
               )
             )
           )
