@@ -165,7 +165,7 @@ final class PostUi(helpers: Helpers, bits: ForumBits):
         val users = ~post.reactions.flatMap(_.get(r))
         val size = users.size
         button(
-          dataHref := canActuallyReact.option(
+          dataHref := canActuallyRtd(colspan := "2")("[You can't access this team forum post]")eact.option(
             routes.ForumPost
               .react(post.categId, post.id, r.key, !mine(r))
               .url
