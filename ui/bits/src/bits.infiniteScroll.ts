@@ -1,27 +1,27 @@
-import { pubsub } from "lib/pubsub";
-import { spinnerHtml } from "lib/view";
-import * as xhr from "lib/xhr";
+import { pubsub } from 'lib/pubsub';
+import { spinnerHtml } from 'lib/view';
+import * as xhr from 'lib/xhr';
 
-export function initModule(selector: string = ".infinite-scroll"): void {
+export function initModule(selector: string = '.infinite-scroll'): void {
   $(selector).each(function (this: HTMLElement) {
     register(this, selector);
   });
 }
 
 function register(el: HTMLElement, selector: string, backoff = 500) {
-  const nav = el.querySelector<HTMLAnchorElement>(".pager"),
-    next = nav?.querySelector<HTMLAnchorElement>("a"),
+  const nav = el.querySelector<HTMLAnchorElement>('.pager'),
+    next = nav?.querySelector<HTMLAnchorElement>('a'),
     nextUrl = next?.href;
 
   if (nav && nextUrl)
-    new Promise<void>((res) => {
+    new Promise<void>(res => {
       if (isVisible(nav)) res();
       else
         window.addEventListener(
-          "scroll",
+          'scroll',
           function scrollListener() {
             if (isVisible(nav)) {
-              window.removeEventListener("scroll", scrollListener);
+              window.removeEventListener('scroll', scrollListener);
               res();
             }
           },
@@ -33,16 +33,14 @@ function register(el: HTMLElement, selector: string, backoff = 500) {
         return xhr.text(nextUrl);
       })
       .then(
-        (html) => {
+        html => {
           nav.remove();
-          $(el).append(
-            ($(html).is(selector) ? $(html) : $(html).find(selector)).html(),
-          );
+          $(el).append(($(html).is(selector) ? $(html) : $(html).find(selector)).html());
           dedupEntries(el);
-          pubsub.emit("content-loaded", el);
+          pubsub.emit('content-loaded', el);
           setTimeout(() => register(el, selector, backoff * 1.05), backoff); // recursion with backoff
         },
-        (e) => {
+        e => {
           console.log(e);
           nav.remove();
         },
@@ -57,7 +55,7 @@ function isVisible(el: HTMLElement) {
 function dedupEntries(el: HTMLElement) {
   const ids = new Set<string>();
   $(el)
-    .find("[data-dedup]")
+    .find('[data-dedup]')
     .each(function (this: HTMLElement) {
       const id = this.dataset.dedup;
       if (id) {
